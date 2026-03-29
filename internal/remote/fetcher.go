@@ -158,12 +158,23 @@ func fetchHTTPZip(ctx context.Context, uri, dest string) error {
 	
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return fmt.Errorf("gagal mendownload %s: %w", uri, err)
+		var dnsErr *net.DNSError
+		if errors.As(err, &dnsErr) {
+			return fmt.Errorf("DNS/network error (check internet and DNS): %w", err)
+		}
+		var opErr *net.OpError
+		if errors.As(err, &opErr) {
+			return fmt.Errorf("network error (check your connection): %w", err)
+		}
+		return fmt.Errorf("download failed: %w", err)
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode == http.StatusForbidden {
+		return fmt.Errorf("server returned 403 (rate limit or forbidden); set GITHUB_TOKEN or retry later")
+	}
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("download gagal. Status %d", resp.StatusCode)
+		return fmt.Errorf("download failed with HTTP status %d", resp.StatusCode)
 	}
 
 	// Untuk zip ekstraksi di go kita butuh random access byte raider, simpan sementara:
@@ -174,7 +185,7 @@ func fetchHTTPZip(ctx context.Context, uri, dest string) error {
 	defer os.Remove(tmpZip.Name())
 
 	if _, err := io.Copy(tmpZip, resp.Body); err != nil {
-		return err
+		return fmt.Errorf("download interrupted (partial file discarded): %w", err)
 	}
 	tmpZip.Close()
 
@@ -258,4 +269,25 @@ func fetchGit(ctx context.Context, source, dest string, meta *FetchMeta) error {
 	cmd2 := exec.CommandContext(ctx, "git", "rev-parse", "HEAD")
 	cmd2.Dir = dest
 	if out, err := cmd2.Output(); err == nil {
-		meta.Commit = strings.TrimSpace(
+		meta.Commit = strings.TrimSpace(string(out))
+	}
+	
+	// Hapus folder .git
+	os.RemoveAll(filepath.Join(dest, ".git"))
+
+	return nil
+}
+
+func dirSize(path string) (int64, error) {
+	var size int64
+	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			size += info.Size()
+		}
+		return err
+	})
+	return size, err
+}

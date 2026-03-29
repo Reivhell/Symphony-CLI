@@ -1,0 +1,10 @@
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Project {{.PROJECT_NAME}} (hexagonal)")
+{{- if .USE_CACHE }}
+	fmt.Println("Cache layer enabled")
+{{- end }}
+}

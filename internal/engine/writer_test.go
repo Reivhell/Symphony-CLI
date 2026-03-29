@@ -1,9 +1,13 @@
 package engine
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"sync"
+	"sync/atomic"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -54,6 +58,53 @@ func TestWriteFile_DryRun_DoesNotWriteToDisk(t *testing.T) {
 	require.NoError(t, err)
 	_, statErr := os.Stat(target)
 	assert.Error(t, statErr)
+}
+
+func TestWriter_BoundedConcurrency(t *testing.T) {
+	var peak int32
+	var cur int32
+	var wg sync.WaitGroup
+	for i := 0; i < 100; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			_ = acquireWriteSlot()
+			n := atomic.AddInt32(&cur, 1)
+			for {
+				o := atomic.LoadInt32(&peak)
+				if n <= o {
+					break
+				}
+				if atomic.CompareAndSwapInt32(&peak, o, n) {
+					break
+				}
+			}
+			time.Sleep(2 * time.Millisecond)
+			atomic.AddInt32(&cur, -1)
+			releaseWriteSlot()
+		}(i)
+	}
+	wg.Wait()
+	assert.LessOrEqual(t, peak, int32(10), "semaphore allows at most 10 concurrent critical sections")
+}
+
+func TestWriteFile_ConcurrentUniquePaths(t *testing.T) {
+	out := t.TempDir()
+	ctx := &EngineContext{
+		OutputDir: out,
+		DryRun:    false,
+		YesAll:    true,
+	}
+	var wg sync.WaitGroup
+	for i := 0; i < 40; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			p := filepath.Join(out, fmt.Sprintf("d%d", i), "x.txt")
+			require.NoError(t, WriteFile(p, "ok", ctx))
+		}(i)
+	}
+	wg.Wait()
 }
 
 func TestWriteFile_ParentDirCreated_WhenNotExists(t *testing.T) {

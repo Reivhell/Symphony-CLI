@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"os"
 
@@ -82,14 +84,21 @@ ingin menjalankan injeksi syntax baru yang ada di update terbaru versi template 
 		}
 
 		// 5. Build Engine Context menggunakan Input tersimpan
+		var ws *engine.WriteSession
+		if !regenDryRun {
+			ws = engine.NewWriteSession()
+		}
 		ctx := &engine.EngineContext{
-			Values:    lockFile.Inputs,
-			SourceDir: absSource,
-			OutputDir: cwd,
-			DryRun:    regenDryRun,
-			NoHooks:   regenNoHooks,
-			YesAll:    regenYes, // Auto set ke state konfirmasi dari parameter run
-			Plugins:   engine.PluginRenderersFromBlueprint(bp),
+			Values:       lockFile.Inputs,
+			SourceDir:    absSource,
+			OutputDir:    cwd,
+			DryRun:       regenDryRun,
+			NoHooks:      regenNoHooks,
+			YesAll:       regenYes, // Auto set ke state konfirmasi dari parameter run
+			Plugins:      engine.PluginRenderersFromBlueprint(bp),
+			ExecCtx:      cmd.Context(),
+			WriteSession: ws,
+			Format:       outputFormat,
 		}
 
 		// 6. Validasi 
@@ -129,7 +138,11 @@ ingin menjalankan injeksi syntax baru yang ada di update terbaru versi template 
 		}
 
 		// 7. Re-Execute Scaffolding
-		if err := walkerEng.Execute(actions); err != nil {
+		if err := walkerEng.Execute(cmd.Context(), actions); err != nil {
+			if errors.Is(err, context.Canceled) {
+				fmt.Fprintln(os.Stderr, "Operation cancelled; rolled back partial output where possible.")
+				os.Exit(4)
+			}
 			return err
 		}
 

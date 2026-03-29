@@ -1,9 +1,31 @@
-# template.yaml — hexagonal-go fixture
-# This is a placeholder for testing the Symphony blueprint parser with
-# a more complex, conditional action structure.
-# Full content will be added in Phase 1 integration tests.
-#
-# TODO: Implementasi di Phase 1 (testdata fixtures)
 schema_version: "2"
 name: "hexagonal-go"
 version: "0.1.0"
+description: "Hexagonal fixture for E2E and integration tests"
+min_symphony_version: "0.1.0"
+
+prompts:
+  - id: "PROJECT_NAME"
+    question: "Project name"
+    type: "input"
+    default: "demo-app"
+
+  - id: "USE_CACHE"
+    question: "Enable cache layer?"
+    type: "confirm"
+    default: false
+
+actions:
+  - type: "render"
+    source: "cmd/main.go.tmpl"
+    target: "cmd/{{.PROJECT_NAME}}/main.go"
+
+  - type: "render"
+    source: "README.md"
+    target: "docs/README.md"
+    if: "USE_CACHE == true"
+
+  - type: "shell"
+    command: "echo scaffold-complete"
+
+completion_message: "Hexagonal template applied."

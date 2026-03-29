@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -97,15 +98,21 @@ var genCmd = &cobra.Command{
 			}
 		}
 
+		var ws *engine.WriteSession
+		if !dryRun {
+			ws = engine.NewWriteSession()
+		}
 		ctx := &engine.EngineContext{
-			Values:    answers,
-			SourceDir: absSource,
-			OutputDir: absOutDir,
-			DryRun:    dryRun,
-			NoHooks:   noHooks,
-			YesAll:    yesAll,
-			Format:    outputFormat,
-			Plugins:   engine.PluginRenderersFromBlueprint(bp),
+			Values:       answers,
+			SourceDir:    absSource,
+			OutputDir:    absOutDir,
+			DryRun:       dryRun,
+			NoHooks:      noHooks,
+			YesAll:       yesAll,
+			Format:       outputFormat,
+			Plugins:      engine.PluginRenderersFromBlueprint(bp),
+			ExecCtx:      cmd.Context(),
+			WriteSession: ws,
 			Meta: engine.BlueprintMeta{
 				Name:    bp.Name,
 				Version: bp.Version,
@@ -152,7 +159,11 @@ var genCmd = &cobra.Command{
 			ctx.Reporter = tui.NewJSONReporter(totalFiles)
 		}
 
-		if err := eng.Execute(actions); err != nil {
+		if err := eng.Execute(cmd.Context(), actions); err != nil {
+			if errors.Is(err, context.Canceled) {
+				fmt.Fprintln(os.Stderr, "Operation cancelled; rolled back partial output where possible.")
+				os.Exit(4)
+			}
 			return err
 		}
 
