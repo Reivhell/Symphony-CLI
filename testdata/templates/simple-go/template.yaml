@@ -1,0 +1,32 @@
+schema_version: "2"
+name: "simple-go"
+version: "0.1.0"
+description: "A simple go template"
+min_symphony_version: "0.1.0"
+
+prompts:
+  - id: "PROJECT_NAME"
+    question: "Nama proyek"
+    type: "input"
+    default: "my-app"
+
+  - id: "USE_REDIS"
+    question: "Use Redis (y/n)?"
+    type: "confirm"
+    default: false
+
+actions:
+  - type: "render"
+    source: "cmd/main.go.tmpl"
+    target: "cmd/{{.PROJECT_NAME}}/main.go"
+
+  - type: "render"
+    source: "README.md"
+    target: "README.md"
+    if: "USE_REDIS == true"
+
+  - type: "shell"
+    command: "echo 'Hook running in output directory!!'"
+
+completion_message: |
+  Done! Output scaffolding berhasil disimpan di {{.OUTPUT_DIR}}

@@ -1,0 +1,9 @@
+# template.yaml — hexagonal-go fixture
+# This is a placeholder for testing the Symphony blueprint parser with
+# a more complex, conditional action structure.
+# Full content will be added in Phase 1 integration tests.
+#
+# TODO: Implementasi di Phase 1 (testdata fixtures)
+schema_version: "2"
+name: "hexagonal-go"
+version: "0.1.0"

@@ -1,0 +1,30 @@
+version: "2"
+
+linters:
+  enable:
+    - gofmt
+    - goimports
+    - govet
+    - errcheck
+    - staticcheck
+    - unused
+    - ineffassign
+    - gosec
+    - misspell
+    - gocyclo
+    - dupl
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+  gosec:
+    excludes:
+      - G304
+
+issues:
+  exclude-rules:
+    - path: "_test.go"
+      linters: [gosec, dupl]
+
+run:
+  timeout: 5m

@@ -1,0 +1,10 @@
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Project {{.PROJECT_NAME}} is alive!")
+{{- if .USE_REDIS }}
+    fmt.Println("Redis is configured!")
+{{- end }}
+}

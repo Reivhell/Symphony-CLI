@@ -1,0 +1,97 @@
+# https://goreleaser.com/customization/
+version: 2
+
+project_name: symphony
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: symphony
+    main: ./main.go
+    binary: symphony
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s
+      - -w
+      - -X github.com/username/symphony/cmd.Version={{.Version}}
+      - -X github.com/username/symphony/cmd.Commit={{.Commit}}
+      - -X github.com/username/symphony/cmd.BuildDate={{.Date}}
+
+archives:
+  - id: symphony
+    builds: [symphony]
+    name_template: "symphony_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - src: docs/blueprint-spec.md
+        dst: docs
+      - src: docs/contributing.md
+        dst: docs
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+release:
+  github:
+    owner: username
+    name: symphony
+  draft: false
+  prerelease: auto
+  name_template: "Symphony v{{.Version}}"
+  footer: |
+    ## Installation
+    ```bash
+    curl -sSL https://raw.githubusercontent.com/username/symphony/main/install.sh | sh
+    ```
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "Merge pull request"
+  groups:
+    - title: "New Features"
+      regexp: "^feat"
+      order: 0
+    - title: "Bug Fixes"
+      regexp: "^fix"
+      order: 1
+    - title: "Performance"
+      regexp: "^perf"
+      order: 2
+
+brews:
+  - name: symphony
+    homepage: "https://github.com/username/symphony"
+    description: "The Adaptive Scaffolding Engine"
+    skip_upload: true
+    repository:
+      owner: username
+      name: homebrew-symphony
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    install: |
+      bin.install "symphony"
+    test: |
+      system "#{bin}/symphony", "version"
