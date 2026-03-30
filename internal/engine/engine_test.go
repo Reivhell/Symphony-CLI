@@ -5,7 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/lock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -83,4 +84,9 @@ func TestEngineRun_WritesFilesAndLock(t *testing.T) {
 
 	_, err = os.Stat(filepath.Join(outDir, "symphony.lock"))
 	assert.NoError(t, err)
+
+	lf, err := lock.Read(outDir)
+	require.NoError(t, err)
+	assert.NotEmpty(t, lf.FileChecksums)
+	assert.Contains(t, lf.FileChecksums, "cmd/demo/main.go")
 }

@@ -7,8 +7,8 @@ import (
 	"text/template"
 
 	"github.com/charmbracelet/glamour"
-	"github.com/username/symphony/internal/blueprint"
-	"github.com/username/symphony/internal/engine"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/engine"
 )
 
 // renderTemplate melakukan text/template rendering pada string dengan context values.

@@ -37,6 +37,7 @@ type Action struct {
 	WorkingDir string `yaml:"working_dir"`
 	Strategy   string `yaml:"strategy"` // Untuk type "ast-inject"
 	Anchor     string `yaml:"anchor"`
+	RemoveAnchor bool `yaml:"remove_anchor"` // Optional: omit anchor line from output after injection
 	Content    string `yaml:"content"`
 }
 

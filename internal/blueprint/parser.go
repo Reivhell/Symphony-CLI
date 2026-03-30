@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/username/symphony/internal/version"
+	"github.com/Reivhell/symphony/internal/version"
 	"golang.org/x/mod/semver"
 	"gopkg.in/yaml.v3"
 )

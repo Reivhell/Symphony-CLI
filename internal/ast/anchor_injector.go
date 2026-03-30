@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
 )
 
 // AnchorInjector adalah modul dasar untuk penambahan (injeksi)
@@ -60,11 +60,15 @@ func (a *AnchorInjector) Inject(targetPath string, action blueprint.Action) erro
 
 			switch action.Strategy {
 			case "after-anchor":
-				result = append(result, line)
+				if !action.RemoveAnchor {
+					result = append(result, line)
+				}
 				result = append(result, contentLines...)
 			case "before-anchor":
 				result = append(result, contentLines...)
-				result = append(result, line)
+				if !action.RemoveAnchor {
+					result = append(result, line)
+				}
 			case "replace-anchor":
 				result = append(result, contentLines...)
 			default:

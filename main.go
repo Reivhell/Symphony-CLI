@@ -3,8 +3,8 @@
 package main
 
 import (
-	"github.com/username/symphony/cmd"
-	"github.com/username/symphony/internal/version"
+	"github.com/Reivhell/symphony/cmd"
+	"github.com/Reivhell/symphony/internal/version"
 )
 
 func main() {

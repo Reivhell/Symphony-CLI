@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"runtime"
 
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
 )
 
 // RunHook runs a shell hook with cancellation support.

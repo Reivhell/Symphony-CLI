@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
-	"github.com/username/symphony/internal/blueprint"
-	"github.com/username/symphony/internal/remote"
-	"github.com/username/symphony/internal/tui"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/remote"
+	"github.com/Reivhell/symphony/internal/tui"
 )
 
 var checkJSON bool

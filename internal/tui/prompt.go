@@ -3,7 +3,7 @@ package tui
 import (
 	"fmt"
 
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
 )
 
 // RunPrompts menjalankan sesi interaktif lengkap untuk semua prompt dalam blueprint.

@@ -90,3 +90,59 @@ func TestEvaluate_CircularReference_ReturnsError(t *testing.T) {
 	// Should evaluate without infinite loop; may error or return bool
 	require.NoError(t, err)
 }
+
+func TestEvaluate_SecurityBoundaries(t *testing.T) {
+	// All dangerous expressions below must return an error, not panic.
+	dangerousCases := []struct {
+		name string
+		expr string
+	}{
+		{"os exit attempt", `os.Exit(1)`},
+		{"exec command attempt", `exec.Command("whoami")`},
+		{"very long expression", strings.Repeat("A", 100_000)},
+		{"division by zero", `1/0`},
+		{"null dereference", `nil.field`},
+		// empty string is a special-case: no condition => always run
+		{"empty string", ``},
+	}
+
+	ctx := map[string]any{"SAFE_VAR": "value"}
+
+	for _, tc := range dangerousCases {
+		t.Run(tc.name, func(t *testing.T) {
+			defer func() {
+				if r := recover(); r != nil {
+					t.Errorf("Evaluate panicked for expression %q: %v", tc.expr, r)
+				}
+			}()
+
+			if tc.expr == "" {
+				result, err := Evaluate(tc.expr, ctx)
+				assert.NoError(t, err)
+				assert.True(t, result)
+				return
+			}
+
+			_, err := Evaluate(tc.expr, ctx)
+			assert.NotNil(t, err, "expression %q should return error", tc.expr)
+		})
+	}
+}
+
+func TestEvaluate_TemplateInjectionPrevention(t *testing.T) {
+	// Values coming from user input must not be treated as template strings.
+	ctx := map[string]any{
+		"PROJECT_NAME": "{{.SECRET_VAR}}",
+		"SECRET_VAR":   "sensitive-data",
+	}
+
+	// Legitimate expressions should still evaluate normally.
+	result, err := Evaluate("PROJECT_NAME != ''", ctx)
+	assert.NoError(t, err)
+	assert.True(t, result)
+
+	// The stored value "{{.SECRET_VAR}}" must not be expanded.
+	result2, err2 := Evaluate("PROJECT_NAME == 'sensitive-data'", ctx)
+	assert.NoError(t, err2)
+	assert.False(t, result2, "template injection should not expose SECRET_VAR value")
+}

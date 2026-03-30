@@ -23,9 +23,9 @@ builds:
     ldflags:
       - -s
       - -w
-      - -X github.com/username/symphony/cmd.Version={{.Version}}
-      - -X github.com/username/symphony/cmd.Commit={{.Commit}}
-      - -X github.com/username/symphony/cmd.BuildDate={{.Date}}
+      - -X github.com/Reivhell/symphony/cmd.Version={{.Version}}
+      - -X github.com/Reivhell/symphony/cmd.Commit={{.Commit}}
+      - -X github.com/Reivhell/symphony/cmd.BuildDate={{.Date}}
 
 archives:
   - id: symphony
@@ -49,7 +49,7 @@ checksum:
 
 release:
   github:
-    owner: username
+    owner: Reivhell
     name: symphony
   draft: false
   prerelease: auto
@@ -57,7 +57,7 @@ release:
   footer: |
     ## Installation
     ```bash
-    curl -sSL https://raw.githubusercontent.com/username/symphony/main/install.sh | sh
+    curl -sSL https://raw.githubusercontent.com/Reivhell/symphony/main/install.sh | sh
     ```
 
 changelog:
@@ -82,11 +82,11 @@ changelog:
 
 brews:
   - name: symphony
-    homepage: "https://github.com/username/symphony"
+    homepage: "https://github.com/Reivhell/symphony"
     description: "The Adaptive Scaffolding Engine"
     skip_upload: true
     repository:
-      owner: username
+      owner: Reivhell
       name: homebrew-symphony
     commit_author:
       name: goreleaserbot

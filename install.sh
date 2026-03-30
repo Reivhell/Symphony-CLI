@@ -1,14 +1,14 @@
 #!/bin/sh
 # Symphony CLI installer — downloads a release binary from GitHub and verifies SHA256.
 # Usage:
-#   curl -sSL https://raw.githubusercontent.com/username/symphony/main/install.sh | sh
+#   curl -sSL https://raw.githubusercontent.com/Reivhell/symphony/main/install.sh | sh
 # Options:
 #   SYMPHONY_VERSION=v1.2.3  pin a release tag (default: latest)
 #   sh install.sh --verify-only   download + verify checksums; do not install
 
 set -eu
 
-REPO="${SYMPHONY_GITHUB_REPO:-username/symphony}"
+REPO="${SYMPHONY_GITHUB_REPO:-Reivhell/symphony}"
 BINARY_NAME="symphony"
 VERIFY_ONLY=false
 

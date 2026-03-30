@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/username/symphony/internal/engine"
+	"github.com/Reivhell/symphony/internal/engine"
 )
 
 type summaryModel struct {

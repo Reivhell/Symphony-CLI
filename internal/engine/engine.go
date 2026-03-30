@@ -4,12 +4,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 	"time"
 
-	"github.com/username/symphony/internal/ast"
-	"github.com/username/symphony/internal/blueprint"
-	"github.com/username/symphony/internal/lock"
-	"github.com/username/symphony/internal/version"
+	"github.com/Reivhell/symphony/internal/ast"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/lock"
+	"github.com/Reivhell/symphony/internal/version"
 )
 
 type Engine struct {
@@ -46,6 +48,7 @@ func (e *Engine) Execute(execCtx context.Context, actions []ResolvedAction) erro
 
 	var stats CompletionStats
 	startTime := time.Now()
+	fileChecksums := map[string]string{}
 
 	for _, a := range actions {
 		select {
@@ -86,6 +89,14 @@ func (e *Engine) Execute(execCtx context.Context, actions []ResolvedAction) erro
 				e.ctx.Reporter.OnFileCreated(a.TargetPath)
 			}
 			stats.FilesCreated++
+
+			rel, err := filepath.Rel(e.ctx.OutputDir, a.TargetPath)
+			if err != nil {
+				return fmt.Errorf("resolve checksum key for %s: %w", a.TargetPath, err)
+			}
+			if rel != "." {
+				fileChecksums[filepath.ToSlash(rel)] = lock.FileChecksum(content)
+			}
 		case "shell":
 			continue
 		case "ast-inject":
@@ -120,6 +131,19 @@ func (e *Engine) Execute(execCtx context.Context, actions []ResolvedAction) erro
 				e.ctx.Reporter.OnFileCreated(a.TargetPath) // Di UI reporter terhitung "dibuat" (modified)
 			}
 			stats.FilesCreated++
+
+			b, err := os.ReadFile(a.TargetPath)
+			if err != nil {
+				return fmt.Errorf("read injected file %s for checksum: %w", a.TargetPath, err)
+			}
+
+			rel, err := filepath.Rel(e.ctx.OutputDir, a.TargetPath)
+			if err != nil {
+				return fmt.Errorf("resolve checksum key for %s: %w", a.TargetPath, err)
+			}
+			if rel != "." {
+				fileChecksums[filepath.ToSlash(rel)] = lock.FileChecksum(string(b))
+			}
 		default:
 			return fmt.Errorf("action type tidak dikenal: %s", a.Original.Type)
 		}
@@ -162,6 +186,7 @@ func (e *Engine) Execute(execCtx context.Context, actions []ResolvedAction) erro
 			},
 			Inputs:         e.ctx.Values,
 			OutputChecksum: "",
+			FileChecksums:  fileChecksums,
 		}
 		if err := lock.Write(lf, e.ctx.OutputDir); err != nil {
 			if e.ctx.Reporter != nil {

@@ -7,11 +7,11 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/username/symphony/internal/blueprint"
-	"github.com/username/symphony/internal/engine"
-	"github.com/username/symphony/internal/lock"
-	"github.com/username/symphony/internal/remote"
-	"github.com/username/symphony/internal/tui"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/engine"
+	"github.com/Reivhell/symphony/internal/lock"
+	"github.com/Reivhell/symphony/internal/remote"
+	"github.com/Reivhell/symphony/internal/tui"
 )
 
 var (

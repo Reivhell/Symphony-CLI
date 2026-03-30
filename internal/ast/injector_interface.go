@@ -1,6 +1,6 @@
 package ast
 
-import "github.com/username/symphony/internal/blueprint"
+import "github.com/Reivhell/symphony/internal/blueprint"
 
 // Injector adalah antarmuka untuk mesin pembedah dan penyisip kode.
 type Injector interface {

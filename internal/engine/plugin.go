@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
 )
 
 const pluginExecTimeout = 30 * time.Second

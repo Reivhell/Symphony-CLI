@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/username/symphony/internal/blueprint"
-	"github.com/username/symphony/internal/engine"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/engine"
 )
 
 func TestRenderCompletion_BasicOutput(t *testing.T) {

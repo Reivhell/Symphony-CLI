@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/username/symphony/internal/engine"
+	"github.com/Reivhell/symphony/internal/engine"
 )
 
 // TUIReporter implementasi reporter yang memperbarui Bubbletea GUI progress.

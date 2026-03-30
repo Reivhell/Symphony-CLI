@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/username/symphony/internal/engine"
+	"github.com/Reivhell/symphony/internal/engine"
 )
 
 // captureStdout mengalihkan os.Stdout ke buffer sementara untuk test.

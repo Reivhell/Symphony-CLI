@@ -9,8 +9,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/username/symphony/internal/cliupdate"
-	"github.com/username/symphony/internal/tui"
+	"github.com/Reivhell/symphony/internal/cliupdate"
+	"github.com/Reivhell/symphony/internal/tui"
 )
 
 var Version = "dev"

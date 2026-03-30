@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
 )
 
 // GoInjector bertindak selaku penjaga wrapper injeksi teks anchor

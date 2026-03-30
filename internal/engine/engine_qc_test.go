@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

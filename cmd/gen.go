@@ -8,11 +8,11 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
-	"github.com/username/symphony/internal/blueprint"
-	"github.com/username/symphony/internal/engine"
-	"github.com/username/symphony/internal/remote"
-	"github.com/username/symphony/internal/tui"
-	"github.com/username/symphony/internal/version"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/engine"
+	"github.com/Reivhell/symphony/internal/remote"
+	"github.com/Reivhell/symphony/internal/tui"
+	"github.com/Reivhell/symphony/internal/version"
 )
 
 type fetchWrapper struct {

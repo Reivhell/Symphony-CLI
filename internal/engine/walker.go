@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/username/symphony/internal/blueprint"
-	"github.com/username/symphony/pkg/expr"
+	"github.com/Reivhell/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/pkg/expr"
 )
 
 type ResolvedAction struct {

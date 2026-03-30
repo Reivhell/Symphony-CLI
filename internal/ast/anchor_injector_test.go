@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/username/symphony/internal/blueprint"
+	"github.com/Reivhell/symphony/internal/blueprint"
 )
 
 func TestAnchorInjector_BasicStrategy(t *testing.T) {
@@ -29,6 +29,50 @@ func TestAnchorInjector_BasicStrategy(t *testing.T) {
 	res, _ := os.ReadFile(file)
 	actual := string(res)
 	assert.Contains(t, actual, "SECTION: Routes\nLine 1.5\nLine 2")
+}
+
+func TestAnchorInjector_RemoveAnchorAfterAnchor(t *testing.T) {
+	dir := t.TempDir()
+	file := filepath.Join(dir, "test.txt")
+	content := "Line 1\n# SECTION: Routes\nLine 2"
+	require.NoError(t, os.WriteFile(file, []byte(content), 0644))
+
+	injector := AnchorInjector{}
+
+	act := blueprint.Action{
+		Anchor:       "# SECTION: Routes",
+		Strategy:     "after-anchor",
+		Content:      "Line 1.5",
+		RemoveAnchor: true,
+	}
+	require.NoError(t, injector.Inject(file, act))
+
+	res, _ := os.ReadFile(file)
+	actual := string(res)
+	assert.NotContains(t, actual, "# SECTION: Routes")
+	assert.Contains(t, actual, "Line 1.5\nLine 2")
+}
+
+func TestAnchorInjector_RemoveAnchorBeforeAnchor(t *testing.T) {
+	dir := t.TempDir()
+	file := filepath.Join(dir, "test.txt")
+	content := "Line 1\n# SECTION: Routes\nLine 2"
+	require.NoError(t, os.WriteFile(file, []byte(content), 0644))
+
+	injector := AnchorInjector{}
+
+	act := blueprint.Action{
+		Anchor:       "# SECTION: Routes",
+		Strategy:     "before-anchor",
+		Content:      "Line 1.5",
+		RemoveAnchor: true,
+	}
+	require.NoError(t, injector.Inject(file, act))
+
+	res, _ := os.ReadFile(file)
+	actual := string(res)
+	assert.NotContains(t, actual, "# SECTION: Routes")
+	assert.Contains(t, actual, "Line 1.5\nLine 2")
 }
 
 func TestAnchorInjector_NotFoundSafety(t *testing.T) {

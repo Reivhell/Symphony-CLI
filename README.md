@@ -40,11 +40,11 @@ curl -sSL https://symphony.dev/install.sh | sh
 ```
 
 **Windows**
-Download the latest `symphony_*.zip` from [GitHub Releases](https://github.com/username/symphony/releases), extract `symphony.exe`, and add it to your system `PATH`.
+Download the latest `symphony_*.zip` from [GitHub Releases](https://github.com/Reivhell/symphony/releases), extract `symphony.exe`, and add it to your system `PATH`.
 
 **Build from Source (Requires Go 1.22+)**
 ```bash
-git clone https://github.com/username/symphony.git
+git clone https://github.com/Reivhell/symphony.git
 cd symphony
 make install
 ```
@@ -143,11 +143,11 @@ curl -sSL https://symphony.dev/install.sh | sh
 ```
 
 **Windows**
-Unduh berkas *zipper* terbaru `symphony_*.zip` melalui [Rilis GitHub Resmi](https://github.com/username/symphony/releases), un-ekstrak `symphony.exe`, lalu sertakan *path* foldernya pada variable `PATH` sistem operasi Anda.
+Unduh berkas *zipper* terbaru `symphony_*.zip` melalui [Rilis GitHub Resmi](https://github.com/Reivhell/symphony/releases), un-ekstrak `symphony.exe`, lalu sertakan *path* foldernya pada variable `PATH` sistem operasi Anda.
 
 **Kompilasi Manual dari Source (Mewajibkan Go 1.22+)**
 ```bash
-git clone https://github.com/username/symphony.git
+git clone https://github.com/Reivhell/symphony.git
 cd symphony
 make install
 ```
