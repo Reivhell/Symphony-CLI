@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	defaultOwner = "username"
-	defaultRepo  = "symphony"
+	defaultOwner = "Reivhell"
+	defaultRepo  = "Symphony-CLI"
 	apiTimeout   = 3 * time.Second
 )
 

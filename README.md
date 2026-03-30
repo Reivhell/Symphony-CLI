@@ -55,12 +55,12 @@ Generate a new project from a local or remote template seamlessly.
 
 **1. Scaffold from a remote GitHub repository:**
 ```bash
-symphony gen github.com/username/go-hexagonal-template@v1.2.0 --out ./my-api
+symphony gen github.com/yourname/go-hexagonal-template@v1.2.0 --out ./my-api
 ```
 
 **2. Preview changes without writing to disk (Dry-Run Preview):**
 ```bash
-symphony gen github.com/username/go-blueprint --out ./my-api --dry-run
+symphony gen github.com/yourname/go-blueprint --out ./my-api --dry-run
 ```
 
 **3. Reproduce a previous environment precisely from a lock file:**
@@ -156,12 +156,12 @@ Gunakan template remote atau lokal dengan transisi yang mulus.
 
 **1. Generate (*Scaffold*) dari remote repositori GitHub:**
 ```bash
-symphony gen github.com/username/go-hexagonal-template@v1.2.0 --out ./my-api
+symphony gen github.com/yourname/go-hexagonal-template@v1.2.0 --out ./my-api
 ```
 
 **2. Preview *Dry-Run* sebelum menulis perubahan struktural ke *disk*:**
 ```bash
-symphony gen github.com/username/go-blueprint --out ./my-api --dry-run
+symphony gen github.com/yourname/go-blueprint --out ./my-api --dry-run
 ```
 
 **3. Ulangi (*Reproduce*) environment secara mendetail dari arsip Lock File:**
