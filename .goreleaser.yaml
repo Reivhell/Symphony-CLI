@@ -50,14 +50,14 @@ checksum:
 release:
   github:
     owner: Reivhell
-    name: symphony
+    name: Symphony-CLI
   draft: false
   prerelease: auto
   name_template: "Symphony v{{.Version}}"
   footer: |
     ## Installation
     ```bash
-    curl -sSL https://raw.githubusercontent.com/Reivhell/symphony/main/install.sh | sh
+    curl -sSL https://raw.githubusercontent.com/Reivhell/Symphony-CLI/main/install.sh | sh
     ```
 
 changelog:
@@ -82,7 +82,7 @@ changelog:
 
 brews:
   - name: symphony
-    homepage: "https://github.com/Reivhell/symphony"
+    homepage: "https://github.com/Reivhell/Symphony-CLI"
     description: "The Adaptive Scaffolding Engine"
     skip_upload: true
     repository:

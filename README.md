@@ -3,9 +3,11 @@
 # 🎻 Symphony CLI
 **The Adaptive Scaffolding Engine**
 
+[![CI](https://github.com/Reivhell/Symphony-CLI/actions/workflows/ci.yml/badge.svg)](https://github.com/Reivhell/Symphony-CLI/actions/workflows/ci.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Reivhell/symphony)](https://goreportcard.com/report/github.com/Reivhell/symphony)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-0.1.0--draft-blue.svg)]()
 [![Go Version](https://img.shields.io/badge/go-1.22+-00ADD8.svg)]()
-[![Status](https://img.shields.io/badge/status-Pre--Development-yellow.svg)]()
 
 [English](#-english) | [Bahasa Indonesia](#-bahasa-indonesia)
 
@@ -36,17 +38,15 @@ Unlike traditional code generators like *Cookiecutter* (which can be too basic) 
 
 **Linux / macOS (via Shell Script)**
 ```bash
-curl -sSL https://symphony.dev/install.sh | sh
+curl -sSL https://raw.githubusercontent.com/Reivhell/Symphony-CLI/main/install.sh | sh
 ```
 
 **Windows**
-Download the latest `symphony_*.zip` from [GitHub Releases](https://github.com/Reivhell/symphony/releases), extract `symphony.exe`, and add it to your system `PATH`.
+Download the latest `symphony_*.zip` from [GitHub Releases](https://github.com/Reivhell/Symphony-CLI/releases), extract `symphony.exe`, and add it to your system `PATH`.
 
 **Build from Source (Requires Go 1.22+)**
 ```bash
-git clone https://github.com/Reivhell/symphony.git
-cd symphony
-make install
+go install github.com/Reivhell/symphony@latest
 ```
 
 ### 💻 Quick Start
@@ -139,17 +139,15 @@ Berbeda dengan *code generator* tradisional seperti *Cookiecutter* (yang terlalu
 
 **Linux / macOS (via Shell Script)**
 ```bash
-curl -sSL https://symphony.dev/install.sh | sh
+curl -sSL https://raw.githubusercontent.com/Reivhell/Symphony-CLI/main/install.sh | sh
 ```
 
 **Windows**
-Unduh berkas *zipper* terbaru `symphony_*.zip` melalui [Rilis GitHub Resmi](https://github.com/Reivhell/symphony/releases), un-ekstrak `symphony.exe`, lalu sertakan *path* foldernya pada variable `PATH` sistem operasi Anda.
+Unduh berkas *zipper* terbaru `symphony_*.zip` melalui [Rilis GitHub Resmi](https://github.com/Reivhell/Symphony-CLI/releases), un-ekstrak `symphony.exe`, lalu sertakan *path* foldernya pada variable `PATH` sistem operasi Anda.
 
 **Kompilasi Manual dari Source (Mewajibkan Go 1.22+)**
 ```bash
-git clone https://github.com/Reivhell/symphony.git
-cd symphony
-make install
+go install github.com/Reivhell/symphony@latest
 ```
 
 ### 💻 Quick Start

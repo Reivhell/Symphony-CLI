@@ -8,7 +8,7 @@
 
 set -eu
 
-REPO="${SYMPHONY_GITHUB_REPO:-Reivhell/symphony}"
+REPO="${SYMPHONY_GITHUB_REPO:-Reivhell/Symphony-CLI}"
 BINARY_NAME="symphony"
 VERIFY_ONLY=false
 

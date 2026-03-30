@@ -1,0 +1,60 @@
+# ─── Binary & Build Output ─────────────────────────────────────
+/bin/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# ─── Test & Coverage Artifacts ─────────────────────────────────
+*.test
+*.out
+coverage.out
+coverage.html
+coverage.txt
+
+# ─── Log Files ─────────────────────────────────────────────────
+*.log
+
+# ─── Go Workspace (local override only) ────────────────────────
+go.work
+go.work.sum
+
+# ─── Environment & Secrets ─────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.cert
+
+# ─── OS Artifacts ───────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ─── Editor & IDE ───────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.vim/
+*.code-workspace
+
+# ─── Temporary Files ────────────────────────────────────────────
+tmp/
+temp/
+*.tmp
+
+# ─── Symphony-specific ──────────────────────────────────────────
+# Hasil scaffold dari testing lokal
+/testdata/output/
+# Debug scripts sementara
+bootstrap.ps1

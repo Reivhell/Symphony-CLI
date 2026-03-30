@@ -1,0 +1,12 @@
+# CODEOWNERS — Tentukan siapa yang harus me-review perubahan pada file kritis
+
+# Default: semua file memerlukan review
+*                          @Reivhell
+
+# File kritis yang selalu memerlukan review eksplisit
+go.mod                     @Reivhell
+go.sum                     @Reivhell
+.goreleaser.yaml           @Reivhell
+.github/workflows/         @Reivhell
+internal/engine/           @Reivhell
+pkg/expr/                  @Reivhell
